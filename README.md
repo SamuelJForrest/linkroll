@@ -61,3 +61,7 @@ While still in the `frontend` directory, run the `npm run dev` command. This com
 -   [Favicomatic](https://favicomatic.com/): used to create the project's favicon
 
 ### Misc
+
+## Credits
+
+-   Thanks to [Josh W. Comeau](https://www.joshwcomeau.com/) for his [Modern CSS Reset](https://www.joshwcomeau.com/css/custom-css-reset/)

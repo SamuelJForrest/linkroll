@@ -1,0 +1,14 @@
+@use '../utils' as util;
+
+.banner {
+    background: util.$black;
+
+    &--home {
+        @extend .banner;
+    }
+
+    &-title {
+        @extend .h1;
+        color: util.$white;
+    }
+}
