@@ -24,13 +24,19 @@ From the root directory, run the `pip install -r requirements.txt` to install th
 
 ### Frontend
 
+#### Install Node Version
+
+`cd` into the `frontend` directory and then install the node version you wish to use. The node version for this project can be found in the `.nvmrc` file.
+
+**Tip:** You can quickly install the correct Node Version by running the following command while in the `frontend` directory: `nvm i $(< .nvmrc)`
+
 #### Install Dependencies
 
-`cd` into the `frontend` directory, and run the `npm install` (or `npm i`) command to install the required dependencies.
+While still in the `frontend` directory, and run the `npm install` (or `npm i`) command to install the required dependencies.
 
 #### Run Server
 
-While still in the `frontend` directory, run the `npm run dev` command. This command will also simultaneously run the api server (note, this will only work if the [required backend dependencies](#install-requirements) have been installed).
+Finally, run the `npm run dev` command. This command will also simultaneously run the api server (note, this will only work if the [required backend dependencies](#install-requirements) have been installed).
 
 ## Technologies Used
 
