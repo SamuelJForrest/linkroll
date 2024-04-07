@@ -5,10 +5,15 @@
 
     &--home {
         @extend .banner;
+        padding: 24rem 0 8rem;
     }
 
     &-title {
         @extend .h1;
+        color: util.$white;
+    }
+
+    &-text {
         color: util.$white;
     }
 }

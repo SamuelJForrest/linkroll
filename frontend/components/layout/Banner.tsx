@@ -26,7 +26,9 @@ const Banner: FC<BannerProps> = ({
                     <Col>
                         <div className={styles['banner-content']}>
                             <h1 className={styles['banner-title']}>{title}</h1>
-                            {text && <p>{text}</p>}
+                            {text && (
+                                <p className={styles['banner-text']}>{text}</p>
+                            )}
                             {primaryButton && <p>Primary button</p>}
                             {secondaryButton && <p>Secondary button</p>}
                         </div>

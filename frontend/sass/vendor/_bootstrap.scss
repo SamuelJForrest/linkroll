@@ -1,1 +1,12 @@
-@import '~bootstrap/scss/bootstrap';
+@use '../utils/' as util;
+@import '~bootstrap/scss/bootstrap-grid';
+
+// overrides
+.container,
+.row {
+    --bs-gutter-x: 4rem;
+
+    @media (min-width: util.$lg) {
+        --bs-gutter-x: 4.8rem;
+    }
+}
