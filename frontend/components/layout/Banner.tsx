@@ -1,20 +1,26 @@
 import { FC } from 'react';
+import Link from 'next/link';
 import styles from '../../sass/components/_banner.module.scss';
+import buttonStyles from '../../sass/components/_button.module.scss';
 import { Container, Row, Col } from 'react-bootstrap';
 
 type BannerProps = {
     title: string;
     text?: string;
-    primaryButton?: boolean;
-    secondaryButton?: boolean;
+    primaryButtonText?: string;
+    primaryButtonLink?: string;
+    secondaryButtonText?: string;
+    secondaryButtonLink?: string;
     homepageBanner?: boolean;
 };
 
 const Banner: FC<BannerProps> = ({
     title,
     text,
-    primaryButton,
-    secondaryButton,
+    primaryButtonText,
+    primaryButtonLink,
+    secondaryButtonText,
+    secondaryButtonLink,
     homepageBanner,
 }) => {
     const bannerClass = homepageBanner ? styles['banner--home'] : styles.banner;
@@ -29,8 +35,28 @@ const Banner: FC<BannerProps> = ({
                             {text && (
                                 <p className={styles['banner-text']}>{text}</p>
                             )}
-                            {primaryButton && <p>Primary button</p>}
-                            {secondaryButton && <p>Secondary button</p>}
+                            <div className={styles['banner-buttons']}>
+                                {primaryButtonText && primaryButtonLink && (
+                                    <Link
+                                        href={primaryButtonLink}
+                                        className={
+                                            buttonStyles['button--outline']
+                                        }
+                                    >
+                                        {primaryButtonText}
+                                    </Link>
+                                )}
+                                {secondaryButtonText && secondaryButtonLink && (
+                                    <Link
+                                        href={secondaryButtonLink}
+                                        className={
+                                            buttonStyles['button--tertiary']
+                                        }
+                                    >
+                                        {secondaryButtonText}
+                                    </Link>
+                                )}
+                            </div>
                         </div>
                     </Col>
                 </Row>

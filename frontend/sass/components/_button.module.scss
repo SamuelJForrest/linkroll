@@ -1,0 +1,41 @@
+@use '../utils/' as util;
+
+.button {
+    background: util.$orange;
+    border-radius: 0.8rem;
+    border: 0.2rem solid util.$orange;
+    color: util.$white;
+    display: inline-block;
+    font-size: 1.8rem;
+    padding: 1rem 1.8rem;
+    text-decoration: none;
+    transition: all 0.3s;
+
+    &:hover,
+    &:focus {
+        background: darken(util.$orange, 10%);
+    }
+
+    &--outline {
+        @extend .button;
+        background: transparent;
+
+        &:hover,
+        &:focus {
+            background: util.$orange;
+        }
+    }
+
+    &--tertiary {
+        @include util.underline(util.$orange);
+        color: util.$white;
+        text-decoration: none;
+        font-size: 1.8rem;
+        transition: all 0.3s;
+
+        &:hover,
+        &:focus {
+            color: util.$orange;
+        }
+    }
+}
