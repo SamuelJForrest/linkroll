@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import styles from '../../sass/components/_banner.module.scss';
-import buttonStyles from '../../sass/components/_button.module.scss';
+import Image from 'next/image';
+import styles from '@/sass/layout/_banner.module.scss';
+import buttonStyles from '@/sass/components/_button.module.scss';
 import { Container, Row, Col } from 'react-bootstrap';
 
 type BannerProps = {
@@ -24,12 +25,15 @@ const Banner: FC<BannerProps> = ({
     homepageBanner,
 }) => {
     const bannerClass = homepageBanner ? styles['banner--home'] : styles.banner;
+    const bannerBackground = homepageBanner
+        ? '/images/backgrounds/homepage-banner-bg.svg'
+        : '/images/backgrounds/banner-bg.svg';
 
     return (
         <section className={bannerClass}>
             <Container>
                 <Row>
-                    <Col>
+                    <Col lg="7">
                         <div className={styles['banner-content']}>
                             <h1 className={styles['banner-title']}>{title}</h1>
                             {text && (
@@ -61,6 +65,15 @@ const Banner: FC<BannerProps> = ({
                     </Col>
                 </Row>
             </Container>
+
+            <div className={styles['banner-background']}>
+                <Image
+                    src={bannerBackground}
+                    alt=""
+                    width="1440"
+                    height={homepageBanner ? '600' : '500'}
+                />
+            </div>
         </section>
     );
 };

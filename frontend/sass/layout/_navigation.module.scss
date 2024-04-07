@@ -1,0 +1,35 @@
+@use '../utils/' as util;
+
+.nav {
+    &-list {
+        list-style: none;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 4.8rem;
+    }
+
+    &-logo {
+        @extend .h3;
+        color: util.$white;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+            color: util.$orange;
+        }
+    }
+
+    &-item {
+        a {
+            font-size: 1.8rem;
+            color: util.$white;
+            text-decoration: none;
+
+            &:hover,
+            &:focus {
+                color: util.$orange;
+            }
+        }
+    }
+}

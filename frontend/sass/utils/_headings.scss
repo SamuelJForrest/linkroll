@@ -1,6 +1,14 @@
 @use './variables' as var;
 
 // Headings
+
+.h1,
+.h2,
+.h3 {
+    line-height: 1.2;
+    font-weight: var.$medium;
+}
+
 .h1 {
     font-size: 4.8rem;
 
