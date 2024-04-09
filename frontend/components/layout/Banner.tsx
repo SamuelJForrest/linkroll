@@ -74,6 +74,17 @@ const Banner: FC<BannerProps> = ({
                     height={homepageBanner ? '600' : '500'}
                 />
             </div>
+
+            {homepageBanner && (
+                <div className={styles['banner-background--shape']}>
+                    <Image
+                        src="/images/backgrounds/banner-shape.svg"
+                        alt=""
+                        width="548"
+                        height="400"
+                    />
+                </div>
+            )}
         </section>
     );
 };

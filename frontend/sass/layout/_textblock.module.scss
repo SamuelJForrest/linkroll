@@ -1,0 +1,25 @@
+@use '../utils/' as util;
+
+.textblock {
+    @include util.sectionMargin();
+
+    &-title {
+        @extend .h2;
+        text-align: center;
+        margin-bottom: 2.4rem;
+    }
+
+    &-content {
+        font-size: 1.8rem;
+        text-align: center;
+
+        a {
+            color: util.$orange;
+
+            &:hover,
+            &:focus {
+                text-decoration: none;
+            }
+        }
+    }
+}

@@ -1,6 +1,7 @@
 @use '../utils' as util;
 
 .banner {
+    @include util.sectionMargin();
     background: util.$black;
     position: relative;
     display: flex;
@@ -48,12 +49,23 @@
         bottom: 0;
         left: 0;
         right: 0;
-        object-fit: contain;
         pointer-events: none;
 
         img {
             width: 100%;
             height: 100%;
+            object-fit: cover;
+        }
+
+        &--shape {
+            @extend .banner-background;
+            left: auto;
+            top: auto;
+            display: none;
+
+            @media (min-width: util.$xl) {
+                display: block;
+            }
         }
     }
 }
