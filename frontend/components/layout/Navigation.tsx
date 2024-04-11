@@ -20,7 +20,7 @@ const Navigation = () => {
                     <Col className="col-9 col-lg-4 order-2 order-lg-3">
                         <ul className={styles['nav-list']}>
                             <li className={styles['nav-item']}>
-                                <Link href="/">Explore</Link>
+                                <Link href="/explore">Explore</Link>
                             </li>
                             <li>
                                 <Link

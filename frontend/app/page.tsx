@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 import CallToAction from '@/components/layout/CallToAction';
 
-export default function Home() {
+export default function HomePage() {
     return (
         <main>
             <Banner
