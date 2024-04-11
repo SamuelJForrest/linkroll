@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { ReactNode } from 'react';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import styles from '@/sass/layout/_iconblocks.module.scss';
 
 type IconBlocksProps = {
@@ -10,12 +10,16 @@ type IconBlocksProps = {
 
 const IconBlocks: FC<IconBlocksProps> = ({ title, children }) => {
     return (
-        <section>
+        <section className={styles['iconblock-container']}>
             <Container>
                 <Row>
-                    <h2 className="visually-hidden">{title}</h2>
+                    <Col className="col-12">
+                        <h2 className={styles['iconblock-title']}>{title}</h2>
 
-                    <div className={styles['iconblock-grid']}>{children}</div>
+                        <div className={styles['iconblock-grid']}>
+                            {children}
+                        </div>
+                    </Col>
                 </Row>
             </Container>
         </section>

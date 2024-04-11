@@ -9,15 +9,15 @@ const Navigation = () => {
         <nav className={styles['nav']} aria-label="Primary Navigation">
             <Container>
                 <Row>
-                    <Col lg="4" className="d-flex align-items-center">
+                    <Col className="col-3 col-lg-4 d-flex align-items-center">
                         <Link href="/" className={styles['nav-logo']}>
                             Linkroll
                         </Link>
                     </Col>
-                    <Col lg="4" className="d-flex align-items-center">
+                    <Col className="col-12 col-lg-4 d-flex align-items-center order-3 order-lg-2">
                         <SearchBar />
                     </Col>
-                    <Col lg="4">
+                    <Col className="col-9 col-lg-4 order-2 order-lg-3">
                         <ul className={styles['nav-list']}>
                             <li className={styles['nav-item']}>
                                 <Link href="/">Explore</Link>

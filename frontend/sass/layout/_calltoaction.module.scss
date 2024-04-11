@@ -1,0 +1,15 @@
+@use '../utils/' as util;
+
+.cta {
+    background: util.$yellow;
+    padding: 6rem 0;
+
+    @media (min-width: util.$lg) {
+        padding: 12rem 0;
+    }
+
+    &-text {
+        @extend .h2;
+        text-align: center;
+    }
+}

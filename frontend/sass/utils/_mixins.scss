@@ -31,3 +31,14 @@
         margin-bottom: 8rem;
     }
 }
+
+@mixin logoStyles() {
+    @extend .h3;
+    color: var.$white;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        color: var.$orange;
+    }
+}

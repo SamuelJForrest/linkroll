@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Space_Grotesk } from 'next/font/google';
 import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 import Navigation from '../components/layout/Navigation';
 import '../sass/base/index.scss';
 
@@ -23,6 +24,7 @@ export default function RootLayout({
                     <Navigation />
                 </Header>
                 {children}
+                <Footer />
             </body>
         </html>
     );

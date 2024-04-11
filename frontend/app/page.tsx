@@ -1,6 +1,10 @@
 import Banner from '@/components/layout/Banner';
+import IconBlock from '@/components/layout/IconBlock';
+import IconBlocks from '@/components/layout/IconBlocks';
 import TextBlock from '@/components/layout/TextBlock';
 import Link from 'next/link';
+import { faBook } from '@fortawesome/free-solid-svg-icons';
+import CallToAction from '@/components/layout/CallToAction';
 
 export default function Home() {
     return (
@@ -27,6 +31,45 @@ export default function Home() {
                     deserunt mollit anim id est laborum.
                 </p>
             </TextBlock>
+            <IconBlocks title="features">
+                <IconBlock icon={faBook}>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Assumenda ab nesciunt corrupti quo optio nam quod
+                        praesentium omnis accusantium aperiam, molestias a
+                        earum! Sapiente atque porro blanditiis nulla illum
+                        tenetur!
+                    </p>
+                </IconBlock>
+                <IconBlock icon={faBook}>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Assumenda ab nesciunt corrupti quo optio nam quod
+                        praesentium omnis accusantium aperiam, molestias a
+                        earum! Sapiente atque porro blanditiis nulla illum
+                        tenetur!
+                    </p>
+                </IconBlock>
+                <IconBlock icon={faBook}>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Assumenda ab nesciunt corrupti quo optio nam quod
+                        praesentium omnis accusantium aperiam, molestias a
+                        earum! Sapiente atque porro blanditiis nulla illum
+                        tenetur!
+                    </p>
+                </IconBlock>
+                <IconBlock icon={faBook}>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Assumenda ab nesciunt corrupti quo optio nam quod
+                        praesentium omnis accusantium aperiam, molestias a
+                        earum! Sapiente atque porro blanditiis nulla illum
+                        tenetur!
+                    </p>
+                </IconBlock>
+            </IconBlocks>
+            <CallToAction text="This is the statement block, it tells you something interesting about the service or product." />
         </main>
     );
 }
