@@ -15,6 +15,9 @@ This project's API is based on the [OpenAPI Specification](https://swagger.io/sp
 In the project's root directory, create an `.env` file, containing the following environment variables:
 
 -   `DEVELOPMENT`: if this environment variable exists, sets the project to 'development' mode.
+-   `DATABASE_URL`: a path to the database of your choice.
+-   `SECRET_KEY`: a random string used as part of the JWT hashing functionality.
+-   `ALGORITHM`: the hashing algorithm used to store passwords.
 
 ### Backend
 
@@ -71,3 +74,4 @@ Finally, run the `npm run dev` command. This command will also simultaneously ru
 ## Credits
 
 -   Thanks to [Josh W. Comeau](https://www.joshwcomeau.com/) for his [Modern CSS Reset](https://www.joshwcomeau.com/css/custom-css-reset/)
+-   Thanks to [Eric Roby](https://www.youtube.com/@codingwithroby) for his tutorials on hooking up FastAPI to both Postgres and Next.js
