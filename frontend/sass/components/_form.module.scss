@@ -1,0 +1,79 @@
+@use '../utils/' as util;
+
+.form {
+    @include util.sectionMargin();
+
+    &-wrap {
+        background: rgba(util.$black, 0.05);
+        border: 0.1rem solid rgba(util.$black, 0.15);
+        padding: 2.4rem;
+        border-radius: 0.8rem;
+        margin-bottom: 1.6rem;
+
+        @media (min-width: util.$lg) {
+            padding: 7.2rem;
+            margin-bottom: 2.4rem;
+        }
+
+        &--lower {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.6rem;
+            flex-wrap: wrap;
+
+            a {
+                color: util.$orange;
+
+                &:hover,
+                &:focus {
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+    &-field {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1.6rem;
+
+        label,
+        input {
+            font-size: 1.8rem;
+        }
+
+        label {
+            font-weight: util.$medium;
+            margin-bottom: 0.4rem;
+        }
+
+        input {
+            padding: 1.2rem 1.6rem;
+            border: 0.1rem solid rgba(util.$black, 0.15);
+            border-radius: 0.8rem;
+        }
+    }
+
+    &-errors {
+        padding: 0;
+        list-style: none;
+        background: rgba(util.$red, 0.25);
+        border: 0.2rem solid util.$red;
+        border-radius: 0.4rem;
+        margin-bottom: 2.4rem;
+        padding: 1.6rem;
+    }
+
+    &-error {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        color: util.$red;
+
+        svg {
+            width: 1rem;
+        }
+    }
+}

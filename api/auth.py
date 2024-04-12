@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from datetime import timedelta, datetime
 from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from starlette import status
@@ -99,21 +100,22 @@ db_dependency = Annotated[Session, Depends(get_db)]
 user_dependency = Annotated[dict, Depends(get_current_user)]
 
 
-@router.post('/', status_code=status.HTTP_201_CREATED)
+@router.post('/register/', status_code=status.HTTP_201_CREATED)
 async def create_user(
     db: db_dependency,
     create_user_request: CreateUserRequest
 ):
-    create_user_model = Users(
-        username=create_user_request.username,
-        hashed_password=bcrypt_context.hash(create_user_request.password)
-    )
+    if create_user_request.username and create_user_request.password:
+        create_user_model = Users(
+            username=create_user_request.username,
+            hashed_password=bcrypt_context.hash(create_user_request.password)
+        )
 
-    db.add(create_user_model)
-    db.commit()
+        db.add(create_user_model)
+        db.commit()
 
 
-@router.post('/token', response_model=Token)
+@router.post('/token/', response_model=Token)
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     db: db_dependency,

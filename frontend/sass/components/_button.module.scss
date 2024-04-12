@@ -1,6 +1,7 @@
 @use '../utils/' as util;
 
 .button {
+    cursor: pointer;
     background: util.$orange;
     border-radius: 0.8rem;
     border: 0.2rem solid util.$orange;
