@@ -1,3 +1,4 @@
+import LoginForm from '@/components/UI/LoginForm';
 import Banner from '@/components/layout/Banner';
 
 export default function LoginPage() {
@@ -7,6 +8,7 @@ export default function LoginPage() {
                 title="Login"
                 text="Lorem ipsum dolor sit amet, consectetur adipscing elit."
             />
+            <LoginForm />
         </main>
     );
 }

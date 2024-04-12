@@ -17,6 +17,12 @@ const nextConfig = {
                     : '/api/',
             },
             {
+                source: '/auth/:path*',
+                destination: process.env.DEVELOPMENT
+                    ? 'http://127.0.0.1/auth/:path*'
+                    : '/auth/',
+            },
+            {
                 source: '/docs',
                 destination: process.env.DEVELOPMENT
                     ? 'http://127.0.0.1:8000/docs'
