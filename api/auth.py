@@ -86,13 +86,13 @@ async def get_current_user(
         if username is None or user_id is None:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail='Could not validate user.'
+                detail='There has been an error. Please check your details and try again.' # noqa
             )
         return {'username': username, 'id': user_id}
     except JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail='Could not validate user.'
+            detail='There has been an error. Please check your details and try again.' # noqa
         )
 
 
@@ -138,7 +138,7 @@ async def login_for_access_token(
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail='Could not validate user.'
+            detail='There has been an error. Please check your details and try again.' # noqa
         )
     token = create_access_token(
         user.username,
@@ -147,13 +147,3 @@ async def login_for_access_token(
     )
 
     return {'access_token': token, 'token_type': 'bearer'}
-
-
-@router.get("/login/")
-async def login(user: user_dependency, db: db_dependency):
-    if user is None:
-        raise HTTPException(
-            status_code=401,
-            detail="Authentication failed"
-        )
-    return {"User": user}

@@ -67,13 +67,17 @@
 
     &-error {
         display: flex;
-        align-items: center;
-        flex-wrap: wrap;
         gap: 0.8rem;
         color: util.$red;
 
         svg {
             width: 1rem;
+            position: relative;
+            top: 0.3rem;
+        }
+
+        & + .form-error {
+            margin-top: 0.4rem;
         }
     }
 }

@@ -7,6 +7,7 @@ import styles from '@/sass/components/_form.module.scss';
 import buttonStyles from '@/sass/components/_button.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 type LoginFormData = {
     username: string;
@@ -20,6 +21,7 @@ const LoginForm = () => {
     });
     const [formErrors, setFormErrors] = useState<string[]>([]);
     const [submitAttempts, setSubmitAttempts] = useState<number>(0);
+    const { login } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
@@ -48,7 +50,6 @@ const LoginForm = () => {
     };
 
     const submitForm = async (): Promise<void> => {
-        const { username, password } = loginDetails;
         try {
             const res = await fetch('http://localhost:8000/auth/token', {
                 method: 'POST',
@@ -60,13 +61,11 @@ const LoginForm = () => {
 
             if (res.ok) {
                 const { access_token } = await res.json();
-                localStorage.setItem('access_token', access_token);
-                router.push('/');
+                login(access_token);
             } else {
                 const data = await res.json();
                 if (data.detail) {
-                    console.log([...data.detail]);
-                    // setFormErrors((prevErrors) => [...prevErrors, data.detail]);
+                    setFormErrors((prevErrors) => [...prevErrors, data.detail]);
                 } else {
                     setFormErrors([
                         'Failed to register. Please check your credentials and try again',

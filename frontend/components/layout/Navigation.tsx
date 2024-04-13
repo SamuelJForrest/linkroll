@@ -4,10 +4,10 @@ import { Container, Row, Col } from 'react-bootstrap';
 import buttonStyles from '@/sass/components/_button.module.scss';
 import styles from '@/sass/layout/_navigation.module.scss';
 import SearchBar from '../UI/SearchBar';
-import useAuthToken from '@/hooks/useAuthToken';
+import { useAuth } from '@/context/AuthContext';
 
 const Navigation = () => {
-    const { hasAuthToken, authTokenData } = useAuthToken();
+    const { isAuthenticated, setIsAuthenticated, logout, user } = useAuth();
 
     return (
         <nav className={styles['nav']} aria-label="Primary Navigation">
@@ -28,18 +28,18 @@ const Navigation = () => {
                             </li>
                             <li
                                 className={
-                                    hasAuthToken ? styles['nav-item'] : ''
+                                    isAuthenticated ? styles['nav-item'] : ''
                                 }
                             >
-                                {hasAuthToken ? (
+                                {isAuthenticated ? (
                                     <>
                                         <p>
                                             Logged in as{' '}
                                             <Link href="/">
-                                                {authTokenData?.username}
+                                                {user?.username}
                                             </Link>
                                         </p>
-                                        <Link href="/logout">Logout</Link>
+                                        <button onClick={logout}>Logout</button>
                                     </>
                                 ) : (
                                     <Link

@@ -4,6 +4,8 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Navigation from '../components/layout/Navigation';
 import '../sass/base/index.scss';
+import { AuthProvider } from '@/context/AuthContext';
+import FlashMessage from '@/components/UI/FlashMessage';
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'] });
 
@@ -19,13 +21,16 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={spaceGrotesk.className}>
-                <Header>
-                    <Navigation />
-                </Header>
-                {children}
-                <Footer />
-            </body>
+            <AuthProvider>
+                <body className={spaceGrotesk.className}>
+                    <Header>
+                        <Navigation />
+                    </Header>
+                    {children}
+                    <FlashMessage />
+                    <Footer />
+                </body>
+            </AuthProvider>
         </html>
     );
 }
