@@ -1,8 +1,17 @@
 @use '../utils/' as util;
 
 @mixin setFlashColors($titleBg) {
-    .flash-title {
-        background: $titleBg;
+    .flash {
+        &-titlewrap {
+            background: $titleBg;
+        }
+
+        &-close {
+            &:hover,
+            &:focus {
+                color: $titleBg;
+            }
+        }
     }
 }
 
@@ -13,7 +22,13 @@
     background: util.$white;
     border: 0.1rem solid util.$black;
     border-radius: 0.8rem;
-    max-width: 40rem;
+    left: 1.6rem;
+    overflow: hidden;
+
+    @media (min-width: util.$lg) {
+        width: 40rem;
+        left: auto;
+    }
 
     &--success,
     &--error {
@@ -21,20 +36,52 @@
     }
 
     &--success {
-        @include setFlashColors(green);
+        @include setFlashColors(util.$green);
     }
 
     &-error {
         @include setFlashColors(util.$red);
     }
 
-    &-title,
+    &-titlewrap,
     &-message {
-        padding: 1.6rem 2.4rem;
+        padding: 1.4rem 2rem;
+    }
+
+    &-titlewrap {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1.6rem;
     }
 
     &-title {
-        background: util.$black;
         color: util.$white;
+        font-size: 1.8rem;
+    }
+
+    &-message {
+        font-size: 1.4rem;
+    }
+
+    &-close {
+        cursor: pointer;
+        background: none;
+        border: 0.1rem solid util.$white;
+        border-radius: 50%;
+        color: util.$white;
+        font-size: 1.2rem;
+        transition: all 0.3s;
+        padding: 0.4rem 0.8rem;
+
+        &:hover,
+        &:focus {
+            background: util.$white;
+        }
+
+        &-text {
+            @include util.visuallyHidden();
+        }
     }
 }

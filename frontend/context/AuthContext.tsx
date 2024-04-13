@@ -22,7 +22,7 @@ type AuthContextType = {
     login: (value: string) => void;
     logout: () => void;
     flashMessage: FlashMessageType;
-    setflashMessage: (value: FlashMessageType) => void;
+    setflashMessage: (value: FlashMessageType | null) => void;
 };
 
 type AuthProviderType = {
