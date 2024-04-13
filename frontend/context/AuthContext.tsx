@@ -21,7 +21,7 @@ type AuthContextType = {
     user: AuthTokenData | null;
     login: (value: string) => void;
     logout: () => void;
-    flashMessage: FlashMessageType;
+    flashMessage: FlashMessageType | null;
     setflashMessage: (value: FlashMessageType | null) => void;
 };
 
