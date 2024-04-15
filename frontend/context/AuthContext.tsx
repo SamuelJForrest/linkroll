@@ -23,6 +23,8 @@ type AuthContextType = {
     logout: () => void;
     flashMessage: FlashMessageType | null;
     setflashMessage: (value: FlashMessageType | null) => void;
+    showMenu: boolean;
+    toggleMenu: () => void;
 };
 
 type AuthProviderType = {
@@ -47,6 +49,7 @@ const AuthProvider: FC<AuthProviderType> = ({ children }) => {
     const [flashMessage, setflashMessage] = useState<FlashMessageType | null>(
         null
     );
+    const [showMenu, setShowMenu] = useState<boolean>(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -84,7 +87,12 @@ const AuthProvider: FC<AuthProviderType> = ({ children }) => {
             message: 'You have been successfully logged out.',
             status: FlashMessageStatus.Success,
         });
+        setShowMenu(false);
         router.push('/');
+    };
+
+    const toggleMenu = () => {
+        setShowMenu((prevState) => !prevState);
     };
 
     return (
@@ -97,6 +105,8 @@ const AuthProvider: FC<AuthProviderType> = ({ children }) => {
                 logout,
                 flashMessage,
                 setflashMessage,
+                showMenu,
+                toggleMenu,
             }}
         >
             {children}

@@ -5,9 +5,19 @@ import buttonStyles from '@/sass/components/_button.module.scss';
 import styles from '@/sass/layout/_navigation.module.scss';
 import SearchBar from '../UI/SearchBar';
 import { useAuth } from '@/context/AuthContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
 
 const Navigation = () => {
-    const { isAuthenticated, setIsAuthenticated, logout, user } = useAuth();
+    const {
+        isAuthenticated,
+        setIsAuthenticated,
+        logout,
+        user,
+        showMenu,
+        toggleMenu,
+    } = useAuth();
 
     return (
         <nav className={styles['nav']} aria-label="Primary Navigation">
@@ -33,13 +43,35 @@ const Navigation = () => {
                             >
                                 {isAuthenticated ? (
                                     <>
-                                        <p>
-                                            Logged in as{' '}
-                                            <Link href="/">
-                                                {user?.username}
-                                            </Link>
-                                        </p>
-                                        <button onClick={logout}>Logout</button>
+                                        Logged in as{' '}
+                                        <button
+                                            className="menuTrigger"
+                                            onClick={toggleMenu}
+                                            aria-expanded={showMenu}
+                                        >
+                                            {user?.username}
+                                            {showMenu ? (
+                                                <FontAwesomeIcon
+                                                    icon={faChevronUp}
+                                                />
+                                            ) : (
+                                                <FontAwesomeIcon
+                                                    icon={faChevronDown}
+                                                />
+                                            )}
+                                        </button>
+                                        {showMenu && (
+                                            <ul>
+                                                <Link
+                                                    href={`/profile/${user?.id}`}
+                                                >
+                                                    View profile
+                                                </Link>
+                                                <button onClick={logout}>
+                                                    Logout
+                                                </button>
+                                            </ul>
+                                        )}
                                     </>
                                 ) : (
                                     <Link

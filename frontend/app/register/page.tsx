@@ -1,7 +1,7 @@
 import RegisterForm from '@/components/UI/RegisterForm';
 import Banner from '@/components/layout/Banner';
 
-export default function LoginPage() {
+export default function RegisterPage() {
     return (
         <main>
             <Banner
