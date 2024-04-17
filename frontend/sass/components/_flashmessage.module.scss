@@ -39,7 +39,7 @@
         @include setFlashColors(util.$green);
     }
 
-    &-error {
+    &--error {
         @include setFlashColors(util.$red);
     }
 

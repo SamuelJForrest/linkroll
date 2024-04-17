@@ -10,9 +10,10 @@ type userType = {
 export default function ProfilePage({
     params,
 }: {
-    params: { profileId: string };
+    params: { profileId: number };
 }) {
     const [user, setUser] = useState<userType | null>(null);
+    const [isLoggedInUser, setIsLoggedInUser] = useState<boolean>(false);
     const profileId = params.profileId;
 
     useEffect(() => {
@@ -34,11 +35,28 @@ export default function ProfilePage({
             if (res.ok) {
                 const data = await res.json();
                 setUser(data);
+
+                if (data.id === Number(profileId)) {
+                    setIsLoggedInUser(true);
+                }
             }
         } catch {
             console.log('catch');
         }
     };
 
-    return <main>{user && <Banner title={user.username} />}</main>;
+    return (
+        <main>
+            {user &&
+                (isLoggedInUser ? (
+                    <Banner
+                        title={user.username}
+                        primaryButtonLink="/new-list"
+                        primaryButtonText="New list"
+                    />
+                ) : (
+                    <Banner title={user.username} />
+                ))}
+        </main>
+    );
 }
