@@ -2,8 +2,11 @@ import styles from '@/sass/components/_form.module.scss';
 import buttonStyles from '@/sass/components/_button.module.scss';
 import FormContainer from '../layout/FormContainer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { faPlus, faX } from '@fortawesome/free-solid-svg-icons';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { FormEvent } from 'react';
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 type FormData = {
     title: string;
@@ -17,6 +20,44 @@ const ListForm = () => {
             url: '',
         },
     ]);
+    const [formErrors, setFormErrors] = useState<string[]>([]);
+    const [submitAttempts, setSubmitAttempts] = useState<number>(0);
+    const { user } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (formErrors.length === 0 && submitAttempts > 0) {
+            submitForm();
+        }
+    }, [formErrors]);
+
+    const submitForm = async (): Promise<void> => {
+        try {
+            const res = await fetch('http://localhost:8000/api/new-list', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user: user?.id,
+                    data: formData,
+                }),
+            });
+
+            if (res.ok) {
+                router.push(`/profile/${user?.id}`);
+            } else {
+                // const data = await res.json();
+                // if (data.detail) {
+                //     setFormErrors((prevErrors) => [...prevErrors, data.detail]);
+                // } else {
+                //     setFormErrors(['Something went wrong, please try again.']);
+                // }
+            }
+        } catch {
+            console.log('catch');
+        }
+    };
 
     const newLinkHandler = () => {
         setFormData((prevData) => {
@@ -24,21 +65,88 @@ const ListForm = () => {
         });
     };
 
+    const inputHandler = (
+        e: ChangeEvent<HTMLInputElement>,
+        index: number
+    ): void => {
+        const { name, value } = e.target;
+
+        setFormData((prevData) => {
+            return prevData.map((item, i) => {
+                if (i === index) {
+                    return {
+                        ...item,
+                        [name]: value,
+                    };
+                }
+                return item;
+            });
+        });
+    };
+
+    const submitHandler = (e: FormEvent<HTMLFormElement>): void => {
+        e.preventDefault();
+        setFormErrors([]);
+
+        const newErrors: string[] = [];
+
+        formData.map((item, i) => {
+            const { title, url } = item;
+
+            if (!title || !url) {
+                newErrors.push(
+                    `Please ensure all fields are filled (Link ${i + 1}).`
+                );
+            }
+        });
+
+        setFormErrors((prevErrors) => [...prevErrors, ...newErrors]);
+        setSubmitAttempts((prevAttempts) => (prevAttempts += 1));
+
+        console.log({
+            user,
+            data: formData,
+        });
+    };
+
+    const errors = formErrors.map((error, i) => {
+        return (
+            <li className={styles['form-error']} key={i}>
+                <FontAwesomeIcon icon={faX} />
+                {error}
+            </li>
+        );
+    });
+
     const formDataMap = formData.map((data, i) => {
         return (
-            <div className={styles['form-field']} key={i}>
-                <label htmlFor="link-1-title">Link one title</label>
-                <input type="text" name="link-1-title" id="link-1-title" />
-                <label htmlFor="link-1-url">Link one URL</label>
-                <input type="text" name="link-1-url" id="link-1-url" />
-            </div>
+            <fieldset className={styles['form-field']} key={i}>
+                <legend>Link {i + 1}</legend>
+                <label htmlFor="title">Title</label>
+                <input
+                    type="text"
+                    name="title"
+                    id="title"
+                    onChange={(e) => inputHandler(e, i)}
+                />
+                <label htmlFor="url">URL</label>
+                <input
+                    type="text"
+                    name="url"
+                    id="url"
+                    onChange={(e) => inputHandler(e, i)}
+                />
+            </fieldset>
         );
     });
 
     return (
         <FormContainer>
-            <form className={styles['form']}>
+            <form className={styles['form']} onSubmit={submitHandler}>
                 <div className={styles['form-wrap--links']}>
+                    {formErrors.length > 0 && (
+                        <ul className={styles['form-errors']}>{errors}</ul>
+                    )}
                     {formDataMap}
                     <button
                         type="button"

@@ -35,6 +35,16 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 
+class Link(BaseModel):
+    title: str
+    url: str
+
+
+class LinkList(BaseModel):
+    user: int
+    data: List[Link]
+
+
 @app.get("/api/")
 async def index():
     return {"message": "Welcome to the homepage!"}
@@ -53,3 +63,9 @@ async def profile(profile_id, db: db_dependency):
         )
 
     return user_profile
+
+
+@app.post("/api/new-list/")
+async def new_list(data: LinkList, db: db_dependency):
+    for link in data:
+        print(link)

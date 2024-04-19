@@ -57,6 +57,10 @@
             @media (min-width: util.$lg) {
                 margin-left: auto;
             }
+
+            svg {
+                margin-right: 0.8rem;
+            }
         }
     }
 
@@ -65,21 +69,35 @@
         flex-direction: column;
         margin-bottom: 1.6rem;
         width: 100%;
+        border: none;
+        padding: 0;
 
         label,
+        legend,
         input {
             font-size: 1.8rem;
         }
 
-        label {
+        label,
+        legend {
             font-weight: util.$medium;
             margin-bottom: 0.4rem;
+        }
+
+        legend {
+            float: left;
         }
 
         input {
             padding: 1.2rem 1.6rem;
             border: 0.1rem solid rgba(util.$black, 0.15);
             border-radius: 0.8rem;
+        }
+
+        &:is(fieldset) {
+            label {
+                font-size: 1.4rem;
+            }
         }
     }
 
@@ -91,6 +109,7 @@
         border-radius: 0.4rem;
         margin-bottom: 2.4rem;
         padding: 1.6rem;
+        width: 100%;
     }
 
     &-error {
