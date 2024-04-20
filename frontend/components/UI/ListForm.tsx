@@ -14,6 +14,7 @@ type FormData = {
 }[];
 
 const ListForm = () => {
+    const [formTitle, setFormTitle] = useState<string>('');
     const [formData, setFormData] = useState<FormData>([
         {
             title: '',
@@ -40,6 +41,7 @@ const ListForm = () => {
                 },
                 body: JSON.stringify({
                     user: user?.id,
+                    title: formTitle,
                     data: formData,
                 }),
             });
@@ -84,11 +86,21 @@ const ListForm = () => {
         });
     };
 
+    const updateTitleHandler = (e: ChangeEvent<HTMLInputElement>): void => {
+        const { value } = e.target;
+
+        setFormTitle(value);
+    };
+
     const submitHandler = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         setFormErrors([]);
 
         const newErrors: string[] = [];
+
+        if (!formTitle) {
+            newErrors.push('Your list must have a title');
+        }
 
         formData.map((item, i) => {
             const { title, url } = item;
@@ -105,6 +117,7 @@ const ListForm = () => {
 
         console.log({
             user,
+            title: formTitle,
             data: formData,
         });
     };
@@ -128,6 +141,7 @@ const ListForm = () => {
                     name="title"
                     id="title"
                     onChange={(e) => inputHandler(e, i)}
+                    required
                 />
                 <label htmlFor="url">URL</label>
                 <input
@@ -135,6 +149,7 @@ const ListForm = () => {
                     name="url"
                     id="url"
                     onChange={(e) => inputHandler(e, i)}
+                    required
                 />
             </fieldset>
         );
@@ -147,6 +162,16 @@ const ListForm = () => {
                     {formErrors.length > 0 && (
                         <ul className={styles['form-errors']}>{errors}</ul>
                     )}
+                    <div className={styles['form-field']}>
+                        <label htmlFor="list-title">List Title</label>
+                        <input
+                            type="text"
+                            name="list-title"
+                            id="list-title"
+                            onChange={updateTitleHandler}
+                            required
+                        />
+                    </div>
                     {formDataMap}
                     <button
                         type="button"

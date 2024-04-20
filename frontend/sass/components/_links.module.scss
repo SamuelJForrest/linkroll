@@ -1,0 +1,45 @@
+@use '../utils/' as util;
+
+.link {
+    position: relative;
+    background: util.$black;
+    color: util.$white;
+    border-radius: 0.8rem;
+    padding: 2.4rem;
+    transition: all 0.3s;
+
+    &:hover,
+    &:focus {
+        background: util.$orange;
+    }
+
+    &-wrapper {
+        @include util.sectionMargin();
+    }
+
+    &-list {
+        display: grid;
+
+        @media (min-width: util.$lg) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    &-title {
+        a {
+            @extend .h3;
+            color: util.$white;
+            text-decoration: none;
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                border-radius: 0.8rem;
+            }
+        }
+    }
+}
