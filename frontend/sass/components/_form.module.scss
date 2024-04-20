@@ -3,6 +3,22 @@
 .form {
     @include util.sectionMargin();
 
+    &--filter {
+        margin-bottom: 4rem;
+
+        .form {
+            &-wrap {
+                &--filter {
+                    .form-field {
+                        @media (min-width: util.$lg) {
+                            width: 30%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     &-wrap {
         background: rgba(util.$black, 0.05);
         border: 0.1rem solid rgba(util.$black, 0.15);
@@ -50,6 +66,12 @@
                         border-top: 0.1rem solid rgba(util.$black, 0.15);
                     }
                 }
+            }
+        }
+
+        &--filter {
+            label {
+                @include util.visuallyHidden();
             }
         }
 

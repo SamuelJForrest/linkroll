@@ -2,7 +2,7 @@
 import SingleLink from '@/components/UI/SingleLink';
 import Banner from '@/components/layout/Banner';
 import LinkList from '@/components/layout/LinkList';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 type UserType = {
     username: string;
@@ -13,7 +13,7 @@ type ListType = {
     title: string;
     link: string;
     id: number;
-};
+}[];
 
 export default function ProfilePage({
     params,
@@ -57,15 +57,12 @@ export default function ProfilePage({
         }
     };
 
-    const linksMap = links.map((link, i) => {
-        return (
-            <SingleLink
-                key={link.id}
-                title={link.title}
-                link={`/list/${link.id}`}
-            />
-        );
-    });
+    const filterLinks = (e: ChangeEvent<HTMLInputElement>): void => {
+        e.preventDefault();
+        const { value } = e.target;
+
+        console.log(value);
+    };
 
     return (
         <main>
@@ -80,7 +77,14 @@ export default function ProfilePage({
                     <Banner title={user.username} />
                 ))}
 
-            <LinkList>{linksMap}</LinkList>
+            <LinkList
+                list={links}
+                user={user}
+                altList={true}
+                filterLinks={filterLinks}
+            />
         </main>
     );
 }
+
+export type { ListType, UserType };
