@@ -3,14 +3,12 @@ import { FC } from 'react';
 import styles from '@/sass/components/_links.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { AuthTokenData } from '@/context/AuthContext';
 
 type SingleLinkType = {
     title: string;
     link: string;
-    author: {
-        id: number;
-        username: string;
-    };
+    author: AuthTokenData | null;
 };
 
 const SingleLink: FC<SingleLinkType> = ({ title, link, author }) => {
@@ -21,10 +19,10 @@ const SingleLink: FC<SingleLinkType> = ({ title, link, author }) => {
             </h2>
 
             <Link
-                href={`/profile/${author.id}`}
+                href={`/profile/${author?.id}`}
                 className={styles['link-author']}
             >
-                by <span>{author.username}</span>
+                by <span>{author?.username}</span>
             </Link>
 
             <div className={styles['link-icon']}>
