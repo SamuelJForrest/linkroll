@@ -108,6 +108,7 @@ const AuthProvider: FC<AuthProviderType> = ({ children }) => {
                 flashMessage,
                 setflashMessage,
                 showMenu,
+                setShowMenu,
                 toggleMenu,
             }}
         >

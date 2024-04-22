@@ -7,7 +7,8 @@ import SearchBar from '../UI/SearchBar';
 import { useAuth } from '@/context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 
 const Navigation = () => {
     const {
@@ -16,8 +17,32 @@ const Navigation = () => {
         logout,
         user,
         showMenu,
+        setShowMenu,
         toggleMenu,
     } = useAuth();
+    const pathname = usePathname();
+
+    useEffect(() => {
+        const closeMenu = (e: MouseEvent) => {
+            const target = e.target;
+            const menuTrigger = document.querySelector('.menuTrigger');
+            const navSubMenu = document.querySelector(
+                '.navSubMenu > a, .navSubMenu > button'
+            );
+
+            if (target != menuTrigger && target != navSubMenu) {
+                setShowMenu(false);
+            }
+        };
+
+        document.body.addEventListener('click', closeMenu);
+
+        setShowMenu(false);
+
+        return () => {
+            document.body.removeEventListener('click', closeMenu);
+        };
+    }, [pathname]);
 
     return (
         <nav className={styles['nav']} aria-label="Primary Navigation">
@@ -61,7 +86,7 @@ const Navigation = () => {
                                             )}
                                         </button>
                                         {showMenu && (
-                                            <ul>
+                                            <ul className="navSubMenu">
                                                 <Link
                                                     href={`/profile/${user?.id}`}
                                                 >
