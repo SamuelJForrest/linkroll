@@ -114,12 +114,6 @@ const ListForm = () => {
 
         setFormErrors((prevErrors) => [...prevErrors, ...newErrors]);
         setSubmitAttempts((prevAttempts) => (prevAttempts += 1));
-
-        console.log({
-            user,
-            title: formTitle,
-            data: formData,
-        });
     };
 
     const errors = formErrors.map((error, i) => {

@@ -19,6 +19,7 @@ type AuthContextType = {
     isAuthenticated: boolean;
     setIsAuthenticated: (value: boolean) => void;
     user: AuthTokenData | null;
+    setUser: () => void;
     login: (value: string) => void;
     logout: () => void;
     flashMessage: FlashMessageType | null;
@@ -101,6 +102,7 @@ const AuthProvider: FC<AuthProviderType> = ({ children }) => {
                 isAuthenticated,
                 setIsAuthenticated,
                 user,
+                setUser,
                 login,
                 logout,
                 flashMessage,
@@ -124,4 +126,4 @@ const useAuth = () => {
 };
 
 export { AuthProvider, useAuth, FlashMessageStatus };
-export type { FlashMessageType };
+export type { FlashMessageType, AuthTokenData };

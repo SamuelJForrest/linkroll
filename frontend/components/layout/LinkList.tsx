@@ -1,15 +1,16 @@
-import { ReactNode, FC } from 'react';
+import { FC, ChangeEvent } from 'react';
 import styles from '@/sass/components/_links.module.scss';
 import { Col, Container, Row } from 'react-bootstrap';
 import LinkListFilter from '../UI/LinkListFilter';
 import SingleLink from '../UI/SingleLink';
-import { ListType, UserType } from '@/app/profile/[profileId]/page';
+import { ListType } from '@/app/profile/[profileId]/page';
+import { AuthTokenData } from '@/context/AuthContext';
 
 type LinkListType = {
-    list: ListType;
+    list: ListType[];
     altList?: boolean;
-    user: UserType;
-    filterLinks: () => void;
+    user: AuthTokenData | null;
+    filterLinks: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
 const LinkList: FC<LinkListType> = ({ list, user, altList, filterLinks }) => {
@@ -33,7 +34,14 @@ const LinkList: FC<LinkListType> = ({ list, user, altList, filterLinks }) => {
                 <Row>
                     <Col>
                         <LinkListFilter filterLinks={filterLinks} />
-                        <ul className={listStyle}>{linksMap}</ul>
+
+                        {list.length > 0 ? (
+                            <ul className={listStyle}>{linksMap}</ul>
+                        ) : (
+                            <p className={styles['link-noresults']}>
+                                No results, please refine your search query
+                            </p>
+                        )}
                     </Col>
                 </Row>
             </Container>

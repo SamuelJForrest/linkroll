@@ -2,6 +2,7 @@
 import SingleLink from '@/components/UI/SingleLink';
 import Banner from '@/components/layout/Banner';
 import LinkList from '@/components/layout/LinkList';
+import { useAuth } from '@/context/AuthContext';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 type UserType = {
@@ -13,17 +14,19 @@ type ListType = {
     title: string;
     link: string;
     id: number;
-}[];
+};
 
 export default function ProfilePage({
     params,
 }: {
     params: { profileId: number };
 }) {
-    const [user, setUser] = useState<UserType | null>(null);
+    const [userProfile, setUserProfile] = useState<UserType>();
     const [links, setLinks] = useState<ListType[]>([]);
+    const [filteredLinks, setFilteredLinks] = useState<ListType[]>([]);
     const [isLoggedInUser, setIsLoggedInUser] = useState<boolean>(false);
     const profileId = params.profileId;
+    const { user } = useAuth();
 
     useEffect(() => {
         fetchProfile();
@@ -45,10 +48,11 @@ export default function ProfilePage({
                 const data = await res.json();
                 const { user_profile, user_lists } = data;
 
-                setUser(user_profile);
+                setUserProfile(user_profile);
                 setLinks(user_lists);
+                setFilteredLinks(user_lists);
 
-                if (user_profile.id === Number(profileId)) {
+                if (user?.id === Number(profileId)) {
                     setIsLoggedInUser(true);
                 }
             }
@@ -61,28 +65,31 @@ export default function ProfilePage({
         e.preventDefault();
         const { value } = e.target;
 
-        console.log(value);
+        setFilteredLinks(
+            links.filter((link) => link.title.toLowerCase().includes(value))
+        );
     };
 
     return (
         <main>
-            {user &&
+            {userProfile &&
                 (isLoggedInUser ? (
-                    <Banner
-                        title={user.username}
-                        primaryButtonLink="/new-list"
-                        primaryButtonText="New list"
-                    />
+                    <>
+                        <Banner
+                            title={userProfile.username}
+                            primaryButtonLink="/new-list"
+                            primaryButtonText="New list"
+                        />
+                        <LinkList
+                            list={filteredLinks}
+                            user={user}
+                            altList={true}
+                            filterLinks={filterLinks}
+                        />
+                    </>
                 ) : (
-                    <Banner title={user.username} />
+                    <Banner title={userProfile.username} />
                 ))}
-
-            <LinkList
-                list={links}
-                user={user}
-                altList={true}
-                filterLinks={filterLinks}
-            />
         </main>
     );
 }
