@@ -80,16 +80,16 @@ export default function ProfilePage({
                             primaryButtonLink="/new-list"
                             primaryButtonText="New list"
                         />
-                        <LinkList
-                            list={filteredLinks}
-                            user={user}
-                            altList={true}
-                            filterLinks={filterLinks}
-                        />
                     </>
                 ) : (
                     <Banner title={userProfile.username} />
                 ))}
+            <LinkList
+                list={filteredLinks}
+                user={user}
+                altList={true}
+                filterLinks={filterLinks}
+            />
         </main>
     );
 }

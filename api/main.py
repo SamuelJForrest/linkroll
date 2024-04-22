@@ -55,6 +55,13 @@ async def index():
     return {"message": "Welcome to the homepage!"}
 
 
+@app.get("/api/explore/")
+async def explore(db: db_dependency):
+    user_list = db.query(Users).all()
+
+    return user_list
+
+
 @app.get("/api/profile/{profile_id}")
 async def profile(profile_id, db: db_dependency):
     user_profile = db.query(Users).filter(
