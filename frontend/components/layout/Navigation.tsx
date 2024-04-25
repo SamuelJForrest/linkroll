@@ -24,13 +24,17 @@ const Navigation = () => {
 
     useEffect(() => {
         const closeMenu = (e: MouseEvent) => {
-            const target = e.target;
+            const target = e.target as Element;
             const menuTrigger = document.querySelector('.menuTrigger');
-            const navSubMenu = document.querySelector(
+            const navSubMenu = document.querySelectorAll(
                 '.navSubMenu > a, .navSubMenu > button'
             );
 
-            if (target != menuTrigger && target != navSubMenu) {
+            if (
+                target &&
+                target !== menuTrigger &&
+                !Array.from(navSubMenu).includes(target)
+            ) {
                 setShowMenu(false);
             }
         };

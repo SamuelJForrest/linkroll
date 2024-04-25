@@ -4,16 +4,24 @@ import { Col, Container, Row } from 'react-bootstrap';
 import LinkListFilter from '../UI/LinkListFilter';
 import SingleLink from '../UI/SingleLink';
 import { ListType } from '@/app/profile/[profileId]/page';
+import { UserType } from '@/app/profile/[profileId]/page';
 import { AuthTokenData } from '@/context/AuthContext';
 
 type LinkListType = {
     list: ListType[];
     altList?: boolean;
-    user: AuthTokenData | null;
+    user?: AuthTokenData | null | undefined;
     filterLinks: (e: ChangeEvent<HTMLInputElement>) => void;
+    userList?: boolean;
 };
 
-const LinkList: FC<LinkListType> = ({ list, user, altList, filterLinks }) => {
+const LinkList: FC<LinkListType> = ({
+    list,
+    user,
+    altList,
+    filterLinks,
+    userList,
+}) => {
     const listStyle = altList ? styles['link-list--alt'] : styles['link-list'];
 
     const linksMap = list.map((link, i) => {
@@ -21,7 +29,7 @@ const LinkList: FC<LinkListType> = ({ list, user, altList, filterLinks }) => {
             <li key={link.id}>
                 <SingleLink
                     title={link.title}
-                    link={`/list/${link.id}`}
+                    link={userList ? `/profile/${link.id}` : `/list/${link.id}`}
                     author={user}
                 />
             </li>

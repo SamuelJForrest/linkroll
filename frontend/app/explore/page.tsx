@@ -1,11 +1,13 @@
 'use client';
 import Banner from '@/components/layout/Banner';
-import { useEffect, useState } from 'react';
-import { UserType } from '../profile/[profileId]/page';
-import Link from 'next/link';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { ListType, UserType } from '../profile/[profileId]/page';
+import LinkList from '@/components/layout/LinkList';
 
 export default function ExplorePage() {
     const [userProfiles, setUserProfiles] = useState<UserType[]>([]);
+    const [userList, setUserList] = useState<ListType[]>([]);
+    const [filteredUserList, setFilteredUserList] = useState<ListType[]>([]);
 
     useEffect(() => {
         fetchProfiles();
@@ -22,11 +24,37 @@ export default function ExplorePage() {
 
             if (res.ok) {
                 const data = await res.json();
+
+                const listData: ListType[] = [];
+
+                data.forEach((data: UserType) => {
+                    const { username, id } = data;
+
+                    listData.push({
+                        title: username,
+                        link: `/profile/${id}`,
+                        id,
+                    });
+                });
+
                 setUserProfiles(data);
+                setUserList(listData);
+                setFilteredUserList(listData);
             }
         } catch {
             console.log('catch');
         }
+    };
+
+    const filterLinks = (e: ChangeEvent<HTMLInputElement>): void => {
+        e.preventDefault();
+        const { value } = e.target;
+
+        setFilteredUserList(
+            userList.filter((user) =>
+                user.title.toLowerCase().includes(value.trim())
+            )
+        );
     };
 
     return (
@@ -38,15 +66,11 @@ export default function ExplorePage() {
                 primaryButtonLink="/"
             />
 
-            {userProfiles.map((profile, i) => {
-                return (
-                    <div key={i}>
-                        <Link href={`/profile/${profile.id}`}>
-                            {profile.username}
-                        </Link>
-                    </div>
-                );
-            })}
+            <LinkList
+                list={filteredUserList}
+                userList={true}
+                filterLinks={filterLinks}
+            />
         </main>
     );
 }

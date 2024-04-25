@@ -8,6 +8,16 @@
     padding: 2.4rem;
     transition: all 0.3s;
 
+    &--user {
+        @extend .link;
+
+        .link {
+            &-title {
+                margin-bottom: 19.4rem;
+            }
+        }
+    }
+
     &:hover,
     &:focus {
         background: util.$orange;

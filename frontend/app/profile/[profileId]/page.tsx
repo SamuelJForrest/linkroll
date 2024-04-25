@@ -66,7 +66,9 @@ export default function ProfilePage({
         const { value } = e.target;
 
         setFilteredLinks(
-            links.filter((link) => link.title.toLowerCase().includes(value))
+            links.filter((link) =>
+                link.title.toLowerCase().includes(value.trim())
+            )
         );
     };
 

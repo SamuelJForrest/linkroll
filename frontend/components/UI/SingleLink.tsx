@@ -8,22 +8,26 @@ import { AuthTokenData } from '@/context/AuthContext';
 type SingleLinkType = {
     title: string;
     link: string;
-    author: AuthTokenData | null;
+    author: AuthTokenData | null | undefined;
 };
 
 const SingleLink: FC<SingleLinkType> = ({ title, link, author }) => {
+    const linkStyle = author ? styles['link'] : styles['link--user'];
+
     return (
-        <div className={styles['link']}>
+        <div className={linkStyle}>
             <h2 className={styles['link-title']}>
                 <Link href={link ? link : '#'}>{title}</Link>
             </h2>
 
-            <Link
-                href={`/profile/${author?.id}`}
-                className={styles['link-author']}
-            >
-                by <span>{author?.username}</span>
-            </Link>
+            {author && (
+                <Link
+                    href={`/profile/${author?.id}`}
+                    className={styles['link-author']}
+                >
+                    by <span>{author?.username}</span>
+                </Link>
+            )}
 
             <div className={styles['link-icon']}>
                 <FontAwesomeIcon icon={faChevronRight} />

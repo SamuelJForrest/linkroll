@@ -25,6 +25,7 @@ type AuthContextType = {
     flashMessage: FlashMessageType | null;
     setflashMessage: (value: FlashMessageType | null) => void;
     showMenu: boolean;
+    setShowMenu: (value: boolean) => void;
     toggleMenu: () => void;
 };
 
