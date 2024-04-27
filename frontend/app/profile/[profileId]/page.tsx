@@ -12,7 +12,7 @@ type UserType = {
 
 type ListType = {
     title: string;
-    link: string;
+    url: string;
     id: number;
 };
 
@@ -48,9 +48,21 @@ export default function ProfilePage({
                 const data = await res.json();
                 const { user_profile, user_lists } = data;
 
+                const listData: ListType[] = [];
+
+                user_lists.forEach((data: ListType) => {
+                    const { title, id } = data;
+
+                    listData.push({
+                        title,
+                        url: `/list/${id}`,
+                        id,
+                    });
+                });
+
                 setUserProfile(user_profile);
-                setLinks(user_lists);
-                setFilteredLinks(user_lists);
+                setLinks(listData);
+                setFilteredLinks(listData);
 
                 if (user?.id === Number(profileId)) {
                     setIsLoggedInUser(true);

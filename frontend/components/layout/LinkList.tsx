@@ -11,7 +11,7 @@ type LinkListType = {
     list: ListType[];
     altList?: boolean;
     user?: AuthTokenData | null | undefined;
-    filterLinks: (e: ChangeEvent<HTMLInputElement>) => void;
+    filterLinks?: (e: ChangeEvent<HTMLInputElement>) => void;
     userList?: boolean;
 };
 
@@ -24,14 +24,10 @@ const LinkList: FC<LinkListType> = ({
 }) => {
     const listStyle = altList ? styles['link-list--alt'] : styles['link-list'];
 
-    const linksMap = list.map((link, i) => {
+    const linksMap = list.map((link) => {
         return (
             <li key={link.id}>
-                <SingleLink
-                    title={link.title}
-                    link={userList ? `/profile/${link.id}` : `/list/${link.id}`}
-                    author={user}
-                />
+                <SingleLink title={link.title} url={link.url} author={user} />
             </li>
         );
     });
@@ -41,7 +37,9 @@ const LinkList: FC<LinkListType> = ({
             <Container>
                 <Row>
                     <Col>
-                        <LinkListFilter filterLinks={filterLinks} />
+                        {filterLinks && (
+                            <LinkListFilter filterLinks={filterLinks} />
+                        )}
 
                         {list.length > 0 ? (
                             <ul className={listStyle}>{linksMap}</ul>

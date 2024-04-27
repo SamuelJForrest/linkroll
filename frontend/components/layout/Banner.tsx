@@ -5,6 +5,11 @@ import styles from '@/sass/layout/_banner.module.scss';
 import buttonStyles from '@/sass/components/_button.module.scss';
 import { Container, Row, Col } from 'react-bootstrap';
 
+type BannerUserType = {
+    id: number;
+    username: string;
+};
+
 type BannerProps = {
     title: string;
     text?: string;
@@ -13,6 +18,7 @@ type BannerProps = {
     secondaryButtonText?: string;
     secondaryButtonLink?: string;
     homepageBanner?: boolean;
+    user?: BannerUserType;
 };
 
 const Banner: FC<BannerProps> = ({
@@ -23,6 +29,7 @@ const Banner: FC<BannerProps> = ({
     secondaryButtonText,
     secondaryButtonLink,
     homepageBanner,
+    user,
 }) => {
     const bannerClass = homepageBanner ? styles['banner--home'] : styles.banner;
     const bannerBackground = homepageBanner
@@ -38,6 +45,14 @@ const Banner: FC<BannerProps> = ({
                             <h1 className={styles['banner-title']}>{title}</h1>
                             {text && (
                                 <p className={styles['banner-text']}>{text}</p>
+                            )}
+                            {user && (
+                                <p className={styles['banner-text']}>
+                                    by{' '}
+                                    <Link href={`/profile/${user.id}`}>
+                                        {user.username}
+                                    </Link>
+                                </p>
                             )}
                             <div className={styles['banner-buttons']}>
                                 {primaryButtonText && primaryButtonLink && (

@@ -32,7 +32,7 @@ export default function ExplorePage() {
 
                     listData.push({
                         title: username,
-                        link: `/profile/${id}`,
+                        url: `/profile/${id}`,
                         id,
                     });
                 });

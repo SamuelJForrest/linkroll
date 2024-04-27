@@ -7,17 +7,19 @@ import { AuthTokenData } from '@/context/AuthContext';
 
 type SingleLinkType = {
     title: string;
-    link: string;
+    url: string;
     author: AuthTokenData | null | undefined;
 };
 
-const SingleLink: FC<SingleLinkType> = ({ title, link, author }) => {
+const SingleLink: FC<SingleLinkType> = ({ title, url, author }) => {
     const linkStyle = author ? styles['link'] : styles['link--user'];
+
+    // @TODO: Add in function to check if a link is to an external page or not - also include BE validation for this when a user saves a link!
 
     return (
         <div className={linkStyle}>
             <h2 className={styles['link-title']}>
-                <Link href={link ? link : '#'}>{title}</Link>
+                <Link href={url}>{title}</Link>
             </h2>
 
             {author && (

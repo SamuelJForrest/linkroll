@@ -115,3 +115,26 @@ async def new_list(data: LinkList, db: db_dependency):
             db.add(create_link)
 
         db.commit()
+
+
+@app.get("/api/list/{list_id}")
+async def list(list_id, db: db_dependency):
+    list = db.query(Lists).filter(
+        Lists.id == list_id
+    ).first()
+
+    list_author = db.query(Users).filter(
+        Users.id == list.user_id
+    ).first()
+
+    list_links = db.query(Links).filter(
+        Links.list_id == list.id
+    ).all()
+
+    context = {
+        'list': list,
+        'list_author': list_author,
+        'list_links': list_links
+    }
+
+    return context
