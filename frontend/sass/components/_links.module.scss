@@ -59,6 +59,11 @@
         }
     }
 
+    &-heading {
+        @extend .h3;
+        margin-bottom: 2.4rem;
+    }
+
     &-title {
         a {
             @extend .h3;

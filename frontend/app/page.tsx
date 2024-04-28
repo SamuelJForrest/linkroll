@@ -12,23 +12,26 @@ export default function HomePage() {
             <Banner
                 title="Welcome to Linkroll"
                 text="Lorem ipsum dolor sit amet, consectetur adipscing elit."
-                primaryButtonText="Primary button"
-                primaryButtonLink="/"
+                primaryButtonText="Get Started"
+                primaryButtonLink="/register/"
                 secondaryButtonText="View API"
-                secondaryButtonLink="/api/"
+                secondaryButtonLink="/docs/"
                 homepageBanner={true}
             />
-            <TextBlock title="This is the main header">
+            <TextBlock title="Introducing Linkroll: Your Personal Link Curation Companion">
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut{' '}
-                    <Link href="/">aliquip ex ea commodo consequat</Link>. Duis
-                    aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
+                    Linkroll is your go-to web application for effortlessly
+                    curating your personalized reading lists from the vast
+                    expanse of the internet. With Linkroll, organizing your
+                    favorite online resources has never been easier. Seamlessly
+                    collect, categorize, and manage links that pique your
+                    interest, ensuring you never lose track of valuable
+                    articles, insightful blog posts, or captivating videos
+                    again. Whether it&apos;s for research, leisure, or learning,
+                    Linkroll empowers you to create curated collections tailored
+                    to your interests and preferences. Say goodbye to scattered
+                    bookmarks and hello to a streamlined, organized approach to
+                    internet browsing with Linkroll.
                 </p>
             </TextBlock>
             <IconBlocks title="features">

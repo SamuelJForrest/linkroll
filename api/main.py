@@ -10,6 +10,7 @@ from models import (
 )
 from starlette import status
 from database import ENGINE, SESSION_LOCAL
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 import auth
 
@@ -107,6 +108,12 @@ async def new_list(data: LinkList, db: db_dependency):
         list_id = create_link_list.id
 
         for link in links:
+            if not link.url.startswith('http'):
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Invalid URL. Please Try again."
+                )
+
             create_link = Links(
                 title=link.title,
                 url=link.url,
@@ -135,6 +142,24 @@ async def list(list_id, db: db_dependency):
         'list': list,
         'list_author': list_author,
         'list_links': list_links
+    }
+
+    return context
+
+
+@app.get("/api/search/{query}")
+async def search(query: str, db: db_dependency):
+    users = db.query(Users).filter(
+        func.lower(Users.username).contains(query.lower())
+    ).all()
+
+    lists = db.query(Lists).filter(
+        func.lower(Lists.title).contains(query.lower())
+    ).all()
+
+    context = {
+        'users': users,
+        'lists': lists
     }
 
     return context

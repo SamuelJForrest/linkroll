@@ -66,11 +66,7 @@ export default function ExplorePage() {
                 primaryButtonLink="/"
             />
 
-            <LinkList
-                list={filteredUserList}
-                userList={true}
-                filterLinks={filterLinks}
-            />
+            <LinkList list={filteredUserList} filterLinks={filterLinks} />
         </main>
     );
 }

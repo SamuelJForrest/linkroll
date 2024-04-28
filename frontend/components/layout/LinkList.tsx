@@ -8,26 +8,33 @@ import { UserType } from '@/app/profile/[profileId]/page';
 import { AuthTokenData } from '@/context/AuthContext';
 
 type LinkListType = {
+    title?: string;
     list: ListType[];
     altList?: boolean;
     user?: AuthTokenData | null | undefined;
     filterLinks?: (e: ChangeEvent<HTMLInputElement>) => void;
-    userList?: boolean;
+    newTab?: boolean;
 };
 
 const LinkList: FC<LinkListType> = ({
+    title,
     list,
     user,
     altList,
     filterLinks,
-    userList,
+    newTab,
 }) => {
     const listStyle = altList ? styles['link-list--alt'] : styles['link-list'];
 
     const linksMap = list.map((link) => {
         return (
             <li key={link.id}>
-                <SingleLink title={link.title} url={link.url} author={user} />
+                <SingleLink
+                    title={link.title}
+                    url={link.url}
+                    author={user}
+                    newTab={newTab}
+                />
             </li>
         );
     });
@@ -39,6 +46,10 @@ const LinkList: FC<LinkListType> = ({
                     <Col>
                         {filterLinks && (
                             <LinkListFilter filterLinks={filterLinks} />
+                        )}
+
+                        {title && (
+                            <h2 className={styles['link-heading']}>{title}</h2>
                         )}
 
                         {list.length > 0 ? (

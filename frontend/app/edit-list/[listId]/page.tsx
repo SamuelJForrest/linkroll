@@ -77,10 +77,8 @@ export default function ListPage({ params }: { params: { listId: number } }) {
                 user={listInfo.user}
                 primaryButtonLink={`/edit-list/${listId}`}
                 primaryButtonText="Edit list"
-                secondaryButtonLink={`/delete-list/${listId}`}
-                secondaryButtonText="Delete list"
             />
-            <LinkList list={listInfo.list} newTab={true} />
+            <LinkList list={listInfo.list} />
         </main>
     );
 }

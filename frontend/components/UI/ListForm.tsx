@@ -110,6 +110,10 @@ const ListForm = () => {
                     `Please ensure all fields are filled (Link ${i + 1}).`
                 );
             }
+
+            if (!url.startsWith('https://') && !url.startsWith('http://')) {
+                newErrors.push(`Please enter a valid URL (Link ${i + 1})`);
+            }
         });
 
         setFormErrors((prevErrors) => [...prevErrors, ...newErrors]);
@@ -137,7 +141,13 @@ const ListForm = () => {
                     onChange={(e) => inputHandler(e, i)}
                     required
                 />
-                <label htmlFor="url">URL</label>
+                <label htmlFor="url">
+                    URL{' '}
+                    <span className={styles['form-helptext']}>
+                        (please ensure all URLs start with
+                        &lsquo;https://&rsquo; or &lsquo;http://&rsquo;)
+                    </span>
+                </label>
                 <input
                     type="text"
                     name="url"
