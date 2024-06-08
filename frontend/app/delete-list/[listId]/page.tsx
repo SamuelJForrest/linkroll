@@ -1,13 +1,9 @@
 'use client';
-import { ListType } from '@/app/profile/[profileId]/page';
 import Banner from '@/components/layout/Banner';
-import LinkList from '@/components/layout/LinkList';
-import { useEffect, useState } from 'react';
+import TextBlock from '@/components/layout/TextBlock';
+import buttonStyles from '@/sass/components/_button.module.scss';
 
-type ListDetailsType = {
-    title: string;
-    id: number;
-};
+import { useEffect, useState } from 'react';
 
 export default function DeleteListPage({
     params,
@@ -52,10 +48,15 @@ export default function DeleteListPage({
 
     return (
         <main>
-            <Banner
-                title="Warning!"
-                text={`You are about to delete ${listDetails.title}, are you sure you want to continue?`}
-            />
+            <Banner title="Warning!" />
+            <TextBlock title="Test">
+                <p>
+                    {`You are about to delete ${listDetails.title}, are you sure
+                    you want to continue?`}
+                </p>
+                <button className={buttonStyles['button']}>Yes</button>
+                <button className={buttonStyles['button--tertiary']}>No</button>
+            </TextBlock>
         </main>
     );
 }
