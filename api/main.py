@@ -23,7 +23,7 @@ app.add_middleware(
         "http://localhost:3000/*"
     ],
     allow_credentials=True,
-    allow_methods=['GET', 'POST'],
+    allow_methods=['GET', 'POST', 'DELETE'],
     allow_headers=["*"]
 )
 models.BASE.metadata.create_all(bind=ENGINE)
@@ -145,6 +145,22 @@ async def list(list_id, db: db_dependency):
     }
 
     return context
+
+
+@app.delete("/api/delete/{list_id}")
+async def delete_list(list_id, db: db_dependency):
+    list = db.query(Lists).filter(
+        Lists.id == list_id
+    ).first()
+
+    if not list:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="List not found."
+        )
+
+    db.delete(list)
+    db.commit()
 
 
 @app.get("/api/search/{query}")

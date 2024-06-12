@@ -6,6 +6,7 @@ from sqlalchemy import (
     String,
     ARRAY
 )
+from sqlalchemy.orm import relationship
 from database import BASE
 
 
@@ -27,6 +28,12 @@ class Users(BASE):
         String
     )
 
+    lists = relationship(
+        "Lists",
+        back_populates="user",
+        cascade="all, delete-orphan"
+    )
+
 
 class Lists(BASE):
     __tablename__ = 'lists'
@@ -44,6 +51,17 @@ class Lists(BASE):
 
     title = Column(
         String
+    )
+
+    user = relationship(
+        "Users",
+        back_populates="lists"
+    )
+
+    links = relationship(
+        "Links",
+        back_populates="list",
+        cascade="all, delete-orphan"
     )
 
 
@@ -66,4 +84,9 @@ class Links(BASE):
     list_id = Column(
         Integer,
         ForeignKey('lists.id')
+    )
+
+    list = relationship(
+        "Lists",
+        back_populates="links"
     )

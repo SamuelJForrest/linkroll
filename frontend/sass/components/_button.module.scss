@@ -17,6 +17,19 @@
         background: darken(util.$orange, 10%);
     }
 
+    &-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2.4rem;
+
+        &--marginbottom {
+            @extend .button-wrap;
+            margin-top: -4rem;
+            margin-bottom: 8rem;
+        }
+    }
+
     &--outline {
         @extend .button;
         background: transparent;
@@ -29,6 +42,7 @@
 
     &--tertiary {
         @include util.underline(util.$orange);
+        cursor: pointer;
         color: util.$white;
         text-decoration: none;
         font-size: 1.8rem;
@@ -40,6 +54,22 @@
         &:hover,
         &:focus {
             color: util.$orange;
+        }
+
+        &-dark {
+            @extend .button--tertiary;
+            color: util.$black;
+        }
+    }
+
+    &--warning {
+        @extend .button;
+        background: util.$red;
+        border-color: util.$red;
+
+        &:hover,
+        &:focus {
+            background: darken(util.$red, 10%);
         }
     }
 }
