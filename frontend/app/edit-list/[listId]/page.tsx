@@ -1,7 +1,7 @@
 'use client';
 import { ListType } from '@/app/profile/[profileId]/page';
+import ListForm from '@/components/UI/ListForm';
 import Banner from '@/components/layout/Banner';
-import LinkList from '@/components/layout/LinkList';
 import { useEffect, useState } from 'react';
 
 type ListInfoType = {
@@ -71,14 +71,13 @@ export default function ListPage({ params }: { params: { listId: number } }) {
     };
 
     return (
-        <main>
-            <Banner
-                title={listInfo.title}
-                user={listInfo.user}
-                primaryButtonLink={`/edit-list/${listId}`}
-                primaryButtonText="Edit list"
+        <>
+            <Banner title={listInfo.title} />
+            <ListForm
+                initialFormTitle={listInfo.title}
+                initialFormData={listInfo.list}
+                listId={listId}
             />
-            <LinkList list={listInfo.list} />
-        </main>
+        </>
     );
 }

@@ -23,7 +23,7 @@ app.add_middleware(
         "http://localhost:3000/*"
     ],
     allow_credentials=True,
-    allow_methods=['GET', 'POST', 'DELETE'],
+    allow_methods=['GET', 'POST', 'DELETE', 'PUT'],
     allow_headers=["*"]
 )
 models.BASE.metadata.create_all(bind=ENGINE)
@@ -179,3 +179,44 @@ async def search(query: str, db: db_dependency):
     }
 
     return context
+
+
+@app.put("/api/edit/{list_id}")
+async def edit_list(list_id: int, data: LinkList, db: db_dependency):
+    # Fetch the list by ID
+    existing_list = db.query(Lists).filter(Lists.id == list_id).first()
+
+    if not existing_list:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="List not found."
+        )
+
+    # Update the title if provided
+    if data.title is not None:
+        existing_list.title = data.title
+
+    # Update the links if provided
+    if data.data is not None:
+        # Delete existing links associated with the list
+        db.query(Links).filter(Links.list_id == list_id).delete()
+
+        # Add new links
+        for link in data.data:
+            if not link.url.startswith('http'):
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Invalid URL. Please try again."
+                )
+
+            new_link = Links(
+                title=link.title,
+                url=link.url,
+                list_id=list_id
+            )
+            db.add(new_link)
+
+    # Commit the changes
+    db.commit()
+
+    return {"message": "List updated successfully"}

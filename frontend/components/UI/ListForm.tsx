@@ -13,18 +13,37 @@ type FormData = {
     url: string;
 }[];
 
-const ListForm = () => {
+interface ListFormProps {
+    initialFormData?: FormData;
+    initialFormTitle?: string;
+    listId?: number;
+}
+
+const ListForm = ({
+    initialFormData,
+    initialFormTitle,
+    listId,
+}: ListFormProps) => {
     const [formTitle, setFormTitle] = useState<string>('');
-    const [formData, setFormData] = useState<FormData>([
-        {
-            title: '',
-            url: '',
-        },
-    ]);
+    const [formData, setFormData] = useState<FormData>(
+        initialFormData || [{ title: '', url: '' }]
+    );
     const [formErrors, setFormErrors] = useState<string[]>([]);
     const [submitAttempts, setSubmitAttempts] = useState<number>(0);
     const { user } = useAuth();
     const router = useRouter();
+
+    useEffect(() => {
+        if (initialFormTitle) {
+            setFormTitle(initialFormTitle);
+        }
+    }, [initialFormTitle]);
+
+    useEffect(() => {
+        if (initialFormData) {
+            setFormData(initialFormData);
+        }
+    }, [initialFormData]);
 
     useEffect(() => {
         if (formErrors.length === 0 && submitAttempts > 0) {
@@ -34,30 +53,34 @@ const ListForm = () => {
 
     const submitForm = async (): Promise<void> => {
         try {
-            const res = await fetch('http://localhost:8000/api/new-list', {
-                method: 'POST',
+            const url = listId
+                ? `http://localhost:8000/api/edit/${listId}`
+                : 'http://localhost:8000/api/new-list';
+            const method = listId ? 'PUT' : 'POST';
+
+            const requestData = {
+                user: user?.id,
+                title: formTitle,
+                data: formData,
+            };
+
+            const res = await fetch(url, {
+                method: method,
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    user: user?.id,
-                    title: formTitle,
-                    data: formData,
-                }),
+                body: JSON.stringify(requestData),
             });
 
             if (res.ok) {
                 router.push(`/profile/${user?.id}`);
             } else {
-                // const data = await res.json();
-                // if (data.detail) {
-                //     setFormErrors((prevErrors) => [...prevErrors, data.detail]);
-                // } else {
-                //     setFormErrors(['Something went wrong, please try again.']);
-                // }
+                const errorData = await res.json();
+                console.error('Error Response:', errorData);
+                // Handle error response, e.g., set form errors
             }
-        } catch {
-            console.log('catch');
+        } catch (error) {
+            console.error('Error:', error);
         }
     };
 
@@ -102,7 +125,7 @@ const ListForm = () => {
             newErrors.push('Your list must have a title');
         }
 
-        formData.map((item, i) => {
+        formData.forEach((item, i) => {
             const { title, url } = item;
 
             if (!title || !url) {
@@ -117,7 +140,7 @@ const ListForm = () => {
         });
 
         setFormErrors((prevErrors) => [...prevErrors, ...newErrors]);
-        setSubmitAttempts((prevAttempts) => (prevAttempts += 1));
+        setSubmitAttempts((prevAttempts) => prevAttempts + 1);
     };
 
     const errors = formErrors.map((error, i) => {
@@ -133,15 +156,16 @@ const ListForm = () => {
         return (
             <fieldset className={styles['form-field']} key={i}>
                 <legend>Link {i + 1}</legend>
-                <label htmlFor="title">Title</label>
+                <label htmlFor={`title-${i}`}>Title</label>
                 <input
                     type="text"
                     name="title"
-                    id="title"
+                    id={`title-${i}`}
+                    value={data.title}
                     onChange={(e) => inputHandler(e, i)}
                     required
                 />
-                <label htmlFor="url">
+                <label htmlFor={`url-${i}`}>
                     URL{' '}
                     <span className={styles['form-helptext']}>
                         (please ensure all URLs start with
@@ -151,7 +175,8 @@ const ListForm = () => {
                 <input
                     type="text"
                     name="url"
-                    id="url"
+                    id={`url-${i}`}
+                    value={data.url}
                     onChange={(e) => inputHandler(e, i)}
                     required
                 />
@@ -172,6 +197,7 @@ const ListForm = () => {
                             type="text"
                             name="list-title"
                             id="list-title"
+                            value={formTitle}
                             onChange={updateTitleHandler}
                             required
                         />
@@ -188,7 +214,7 @@ const ListForm = () => {
                 </div>
                 <div className={styles['form-wrap--lower']}>
                     <button type="submit" className={buttonStyles['button']}>
-                        Create new list
+                        {listId ? 'Update list' : 'Create new list'}
                     </button>
                 </div>
             </form>
